@@ -51,7 +51,7 @@ public class MoveTest_R : MonoBehaviour {
     //OnCollisionEnter()：碰撞发生的起始瞬间调用，而且次数只会有一次。
     //OnCollisionExit()：碰撞结束的瞬间调用，也只会调用一次。
     //OnCollisionStay()：碰撞是一个过程，这个方法就是在开始后、结束前的过程中调用，会持续调用。
-    //碰撞检测方法的等级和Start()与Update()是同级的。
+    //碰撞监测方法的等级和Start()与Update()是同级的。
     private void OnCollisionEnter(Collision collision) {
         //因为我的练习关卡里有个plane当地面，而我不想输出它的碰撞信息，所以屏蔽了它。
         if (collision.gameObject.name != "Plane") {
@@ -71,5 +71,27 @@ public class MoveTest_R : MonoBehaviour {
         if (collision.gameObject.name != "Plane") {
             Debug.Log("我和" + collision.gameObject.name + "在激烈互怼中");
         }
+    }
+
+    //我玩一些带有魔法设定的游戏时，总会考虑那些魔法阵是如何知道我踏进去的。
+    //其实很简单，在unity里，用一个触发器就可以了。
+    //我们要先创建一个物体，然后给它弄上合适的Collider，之后再在物体的属性面板里，把“Is Trigger”这一项前面的勾勾勾上，就行了。
+    //勾上之后你会发现你就像是一个灵魂一样可以穿过它。
+    //而刚才那个物体的Collider的范围，就是触发事件的范围了。
+    //触发事件的监测方法有三种，和监测碰撞事件很相似：
+    //OnTriggerEnter()：进入触发范围的瞬间调用，次数只有一次。
+    //OnTriggerExit()：离开触发范围的瞬间调用，次数为一次。
+    //OnTriggerStay()：一直处于触发范围内，持续调用。
+    //触发监测方法的等级和Start()与Update()也是同级的。
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log("我碰到了" + other.gameObject.name + "的边缘");
+    }
+
+    private void OnTriggerExit(Collider other) {
+        Debug.Log("我离开了" + other.gameObject.name + "的范围");
+    }
+
+    private void OnTriggerStay(Collider other) {
+        Debug.Log("我持续的收到来自" + other.gameObject.name + "的10000点伤害");
     }
 }
