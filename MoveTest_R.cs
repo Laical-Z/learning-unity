@@ -45,4 +45,31 @@ public class MoveTest_R : MonoBehaviour {
         //Capsule Collider(Center：中心位置；Radius：半径大小；Height：高度；Direction：Height属性的伸缩轴向)、
         //Mesh Collider(这是一个网格状的“薄膜”，用来覆盖一些复杂的物体。Meth：根据你所选择的基本网格形状来构建整个“薄膜”)。
     }
+
+    //碰撞这个事件由什么来监测呢？没错，用Collision来检测碰撞事件。
+    //检测方法有三种，分别是：
+    //OnCollisionEnter()：碰撞发生的起始瞬间调用，而且次数只会有一次。
+    //OnCollisionExit()：碰撞结束的瞬间调用，也只会调用一次。
+    //OnCollisionStay()：碰撞是一个过程，这个方法就是在开始后、结束前的过程中调用，会持续调用。
+    //碰撞检测方法的等级和Start()与Update()是同级的。
+    private void OnCollisionEnter(Collision collision) {
+        //因为我的练习关卡里有个plane当地面，而我不想输出它的碰撞信息，所以屏蔽了它。
+        if (collision.gameObject.name != "Plane") {
+            //这里是利用debug的log输出打印出碰撞物体的名称
+            Debug.Log("我撞上了" + collision.gameObject.name);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.name != "Plane") {
+            Debug.Log("我撞完" + collision.gameObject.name + "后离开了");
+        }
+    }
+
+    //如果你怼上了某个物体之后还持续的怼它，就会触发这个方法
+    private void OnCollisionStay(Collision collision) {
+        if (collision.gameObject.name != "Plane") {
+            Debug.Log("我和" + collision.gameObject.name + "在激烈互怼中");
+        }
+    }
 }
